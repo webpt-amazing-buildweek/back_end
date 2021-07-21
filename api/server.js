@@ -23,10 +23,7 @@ server.use(express.json());
 //server.use('./api/auth', usersRouter)
 
 
-//add server default sanity check
-server.get("/", (req, res) => {
-    res.status(200).json({ apiStatus: "African Spice market is all 200's and Blue Skies" })
-  })
+
  
 
 server.post("/api/auth/register", async (req, res, next) => {  //eslint-disable-line
@@ -116,4 +113,9 @@ server.post("/api/auth/login", async (req, res, next) => { //eslint-disable-line
     next(err);
   }
 });
+
+//add server default sanity check
+server.use("*", (req, res) => {
+  res.status(200).json({ yodaSays: "African Spice market. All 200's and Blue Skies it is" })
+})
 module.exports = server;
