@@ -21,7 +21,7 @@ server.options('*', cors())
 
 // server.use(cookieParser())
 server.get('/', (req, res) => {
-    res.json({message: 'Recipe Server is all 200s and blue skies'})
+    res.json({message: 'African Spice Market is all 200s and blue skies'})
 })
 server.use('/api/users', usersRouter)
 
