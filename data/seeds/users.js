@@ -5,10 +5,10 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('users').insert([
-        {id: 1, username: 'loki', password: 'password', email: 'loki@marvel.com'},
-        {id: 2, username: 'cyclops', password: 'password', email: 'cyclops@marvel.com'},
-        {id: 3, username: 'sylvie', password: 'password', email: 'sylvie@marvel.com'},
-        {id: 4, username: 'jeangray', password: 'password', email: 'jeangray@marvel.com'},
+        {id: 1, username: 'loki', password: 'password', email: 'loki@marvel.com', isUser: true},
+        {id: 2, username: 'cyclops', password: 'password', email: 'cyclops@marvel.com', isUser: true},
+        {id: 3, username: 'sylvie', password: 'password', email: 'sylvie@marvel.com', isUser: false},
+        {id: 4, username: 'jeangray', password: 'password', email: 'jeangray@marvel.com', isUser: false},
       ]);
     });
 };
