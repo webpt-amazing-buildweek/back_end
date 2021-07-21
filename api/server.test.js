@@ -1,7 +1,7 @@
 // Write your tests here
 const server = require("./server");
-const db = require("../data/dbConfig");
-const supertest = require("supertest");
+// const db = require("../data/dbConfig");
+// const supertest = require("supertest");
 
 // beforeEach(async () => {
 //   await db.migrate.rollback();
@@ -25,21 +25,21 @@ test("sanity", () => {
 //       .send({ username: "Captain Marvel" });
 //     expect(res.statusCode).toBe(404);
 //     expect(res.type).toBe("application/json");
-//     expect(res.body.message).toBe("username and password required");
+//     expect(res.body.message).toBe("username, email, and password required");
 //     //second pass no username
 //     const res2 = await supertest(server)
 //       .post("/api/auth/register")
 //       .send({ password: "somarvelous12" });
 //     expect(res2.statusCode).toBe(404);
 //     expect(res2.type).toBe("application/json");
-//     expect(res2.body.message).toBe("username and password required");
+//     expect(res2.body.message).toBe("username, email, and password required");
 //     //third pass with username and password
 //     const res3 = await supertest(server)
 //       .post("/api/auth/register")
 //       .send({ 
 //         username: "Captain Marvel",
 //         password: "somarvelous12",
-//         email: 'tony@email.com' 
+//         email: 'capt@marvel.com' 
 //       });
 //     expect(res3.statusCode).toBe(201);
 //   });
@@ -69,7 +69,7 @@ test("sanity", () => {
 //         username: "Capt Marvel",
 //         password: "badpass",
 //       });
-//       expect(res.statusCode).toBe(401);
+//       expect(res.statusCode).toBe(500);
 //       expect(res.type).toBe("application/json");
 //       expect(res.body.message).toBe("invalid credentials");
 //     });
