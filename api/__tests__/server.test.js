@@ -1,7 +1,7 @@
 //const supertest = require('supertest')
 //const server = require('../server')
 const db = require('../data/db-config')
-
+//const data = require('../dummyData/test_data')
 
 beforeAll(async () => {
   await db.migrate.rollback()
@@ -25,5 +25,5 @@ describe('server.js', () => {
   })
 })
 
-// const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3VzZXJuYW1lIjoiamltYm8iLCJpYXQiOjE2MTcwMzc2Mzh9.nhYSAG8vN9P3BVKs3H1_z_ul97idTz1fo7c4P3vFg98"
+//const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3VzZXJuYW1lIjoiamltYm8iLCJpYXQiOjE2MTcwMzc2Mzh9.nhYSAG8vN9P3BVKs3H1_z_ul97idTz1fo7c4P3vFg98"
 

@@ -1,11 +1,10 @@
 const express = require('express')
 const helmet = require('helmet')
-//const authenticate = require('./users/users-auth-middleware')
 const usersRouter = require('./users/users-router')
 
 const cors = require('cors')
 
-// const cookieParser = require('cookie-parser')
+
 
 const server = express()
 server.use(express.json())

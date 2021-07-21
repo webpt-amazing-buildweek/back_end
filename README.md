@@ -13,5 +13,4 @@ Register = user_username, user_email, user_password
     ** user_username & user_email must be unique **
 
 Login = user_username, user_password
-    ** user_username & user_password must be valid **
-```
+    ** user_username & user_password must match **
