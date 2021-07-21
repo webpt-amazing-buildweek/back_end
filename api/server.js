@@ -25,7 +25,7 @@ server.use(express.json());
 
 //add server default sanity check
 server.get("/", (req, res) => {
-    res.status(200).json({ apiStatus: "All 200's and Blue Skies" })
+    res.status(200).json({ apiStatus: "African SPice Market is all 200's and Blue Skies" })
   })
  
 
