@@ -1,103 +1,119 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-const express = require('express')
-const helmet = require('helmet')
-//const authenticate = require('./users/users-auth-middleware')
-//const usersRouter = require('./users/users-router')
-const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = require("../secrets/index")
-const bcrypt = require("bcryptjs")
-const users = require('./users/users-model')
-const { 
-  checkEmailUnique,
-  checkUsernameFree,
-  checkUsernameExists, 
-} = require('./users/users-middleware')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const Users = require("./auth/users/users-model");
 
-// const cookieParser = require('cookie-parser')
+//token handling imports
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("./auth/secrets/secrets");
 
-const server = express()
-server.use(express.json())
-server.use(helmet())
+// restricted access middleware
+const restrict = require('./middleware/restricted');
 
-server.use(cors({ 
-	origin: '*',
-	methods: ['GET', 'PUT', 'POST', 'DELETE']
-}))
-
-server.options('*', cors())
+//bring in the routers
+const usersRouter = require('./auth/users/users-router')
 
 
-// server.use(cookieParser())
-server.get('/', (req, res) => {
-    res.json({message: 'African Spice Market is all 200s and blue skies'})
-})
 
-//server.use('/api/users', usersRouter)
-
-server.use((err, req, res, next) => { //eslint-disable-line
-	console.log(err)
-	
-	res.status(500).json({
-		message: "Something went wrong",
-	})
-})
+const server = express();
+server.use(helmet());
+server.use(cors());
+server.use(express.json());
+//server.use('./api/auth', usersRouter)
 
 
-server.post("/api/users/register", checkEmailUnique, checkUsernameFree, async (req, res, next) => {
-	try {
-	  const { user_username, user_email, user_password } = req.body
-  
-	  const hashedPW = await bcrypt.hash(user_password, 10)
-	  
-	  const newUser = await users.add({
-		user_username,
-		user_email,
-		user_password: hashedPW,
-	  })
-	  
-	  res.status(201).json({
-		user_id: newUser.user_id,
-		user_username: newUser.user_username,
-		user_email: newUser.user_email
-	  })
-  
-	} catch (err) {
-	  next(err)
-	}
+//add server default sanity check
+server.get("/", (req, res) => {
+    res.status(200).json({ apiStatus: "African Spice market is all 200's and Blue Skies" })
   })
-  
-  server.post("/api/users/login", checkUsernameExists, async (req, res, next) => {
-	try {
-	  const { user_username, user_password } = req.body
-  
-	  const user = await users.findBy({ user_username })
-  
-	  const passwordValid = await bcrypt.compare(user_password, user[0].user_password)
-  
-	  if (!passwordValid) {
-			  return res.status(401).json({
-				  message: "Invalid Credentials",
-			  })
-		  }
-  
-	  const token = jwt.sign({
-		user_id: user[0].user_id,
-		user_username: user[0].user_username
-	  }, JWT_SECRET)
-  
-	  // res.cookie("token", token)
-  
-	  
-	  res.status(200).json({
-	  message: `${user[0].user_username} is back!`,
-	  token: token,
-	  user_id: user[0].user_id,
-	  user_username: user[0].user_username
-	})
-	} catch (err) {
-	  next(err)
-	}
-  
-  })
-module.exports = server
+ 
+
+server.post("/api/auth/register", async (req, res, next) => {  //eslint-disable-line
+
+  try {
+    const { username, password, email } = req.body;
+    // const username = 'tony'
+    // const password = 'password'
+    // const email = 'tony@mail.com'
+    // console.log('req.body value',req.body)
+    //if username and password are not provided, return error
+    if (!username || !password || !email) {
+      return res.status(404).json({
+        message: "username, email, and password required",
+      });
+    }
+    //if username is taken, return error
+    const userNameIsFound = await Users.findByUsername(username);
+    if (userNameIsFound) {
+      return res.status(409).json({
+        message: "username taken",
+      });
+    }
+    //if email is taken, return error
+    const emailIsFound = await Users.findByEmail(email)
+    if (emailIsFound) {
+        return res.status(409).json({
+            message: "email taken",
+          });
+    }
+
+    //if username and email is not taken, hash the password and save it to the database
+    const newUser = await Users.create({
+      username,
+      password: await bcrypt.hash(password, 3),
+      email
+    });
+    //return the new user's details
+    res.status(201).json(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.post("/api/auth/login", async (req, res, next) => { //eslint-disable-line
+ 
+  try {
+    //const { username, password } = req.body;
+    const username = 'sylvie'
+    const password = 'password'
+    //if username and password are not provided, return error
+    if (!username || !password) {
+      return res.status(404).json({
+        message: "username and password required",
+      });
+    }
+
+    const user = await Users.findByUsername(username);
+    // if user name doesn't exist
+    if (!user) {
+      return res.status(401).json({
+        message: "invalid credentials",
+      });
+    }
+
+    //check if password is correct
+    const passwordValid = await bcrypt.compare(password, user.password);
+    //if not then return error
+    if (!passwordValid) {
+      return res.status(401).json({
+        message: "invalid credentials",
+      });
+    }
+    //if password is correct then create token
+    const token = jwt.sign(
+      {
+        username: user.username,
+      },
+      JWT_SECRET
+    );
+    //return success message and token
+    res.status(200).json({
+      message: `welcome, ${user.username}`,
+      token: token,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+module.exports = server;
