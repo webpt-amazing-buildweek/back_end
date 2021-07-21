@@ -7,6 +7,11 @@ const sharedConfig = {
 }
 
 module.exports = {
+  production: {
+    ...sharedConfig,
+    client : 'sqlite3',
+    connection: process.env.DATABASE_URL,
+  },
   development: {
     ...sharedConfig,
     connection: { filename: './data/auth.db3' },
