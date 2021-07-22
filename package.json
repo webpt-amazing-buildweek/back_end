@@ -7,6 +7,10 @@
     "server": "nodemon index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
+    "migrateh": "heroku run knex migrate:latest -a team-amazing",
+    "rollbackh": "heroku run knex migrate:rollback -a team-amazing",
+    "databaseh": "heroku pg:sql -a team-amazing",
+    "seedh": "heroku run knex seed:run -a team-amazing",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand --silent"
   },
   "repository": {

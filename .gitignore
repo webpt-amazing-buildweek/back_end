@@ -117,9 +117,9 @@ dist
 
 # Mac Cruft
 .DS_Store
-
+*.db3
 # VSCode
 .vscode
 
 # Test db
-test.db3
+# test.db3
