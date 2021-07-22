@@ -10,8 +10,7 @@
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand --silent"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LambdaSchool/web-sprint-challenge-authentication-and-testing.git"
+    "type": "git"
   },
   "license": "ISC",
   "dependencies": {
