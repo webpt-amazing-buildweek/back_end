@@ -23,3 +23,23 @@ heroku run --app <app_name>
 ###LOGIN:
     Post: /api/auth/login
 
+
+### Data Table Structures: 
+User Object
+{
+  id: integer
+  username: string
+  password: string 
+  email: string
+  isOwner: boolean
+}
+Item Object
+{
+  id: integer
+  item_name: string
+  location: string
+  quantity: integer
+  price: float
+  description: string
+  user_id: integer // this references the id in the user table
+}
