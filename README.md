@@ -1,13 +1,13 @@
 # back_end
 
-##HEROKU CLI commands
+## HEROKU CLI commands
 heroku login
 heroku apps:create
 heroku addons:create
 heroku logs --tail -a <app_name>
 heroku run --app <app_name>
 
-###endpoints:
+### Endpoints:
     http://localhost:5500 in development
     http://localhost:5500/api/auth/register 
     http://localhost:5500/api/auth/login
