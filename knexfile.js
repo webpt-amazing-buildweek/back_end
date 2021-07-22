@@ -1,6 +1,8 @@
 // Update with your config settings.
+
+const pg = require('pg');
 const sharedConfig = {
-  client: 'sqlite3',
+  client: 'pg',
   useNullAsDefault: true,
   migrations: { directory: './data/migrations' },
   pool: { afterCreate: (conn, done) => conn.run('PRAGMA foreign_keys = ON', done) },
@@ -8,9 +10,23 @@ const sharedConfig = {
 
 module.exports = {
   production: {
-    ...sharedConfig,
-    client : 'sqlite3',
-    connection: process.env.DATABASE_URL,
+    client: "pg",
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      directory: "./data/migrations",
+    },
+    seeds: {
+      directory: "./data/seeds",
+    },
   },
   development: {
     ...sharedConfig,
