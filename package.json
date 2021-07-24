@@ -8,16 +8,16 @@
     "server": "nodemon index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "migrateh": "heroku run knex migrate:latest -a sauti-unit4-backend",
-    "rollbackh": "heroku run knex migrate:rollback -a sauti-unit4-backend",
-    "databaseh": "heroku pg:sql -a sauti-unit4-backend",
-    "seedh": "heroku run knex seed:run -a sauti-unit4-backend",
+    "migrateh": "heroku run knex migrate:latest -a team-amazing",
+    "rollbackh": "heroku run knex migrate:rollback -a team-amazing",
+    "databaseh": "heroku pg:sql -a team-amazing",
+    "seedh": "heroku run knex seed:run -a team-amazing",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand --silent",
     "deploy": "git push heroku main"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sauit-build-week-unit-4/sauti-unit4-backend.git"
+    "url": "git+https://github.com/webpt-amazing-buildweek/back_end.git"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -26,9 +26,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sauit-build-week-unit-4/sauti-unit4-backend/issues"
+    "url": "https://github.com/webpt-amazing-buildweek/back_end/issues"
   },
-  "homepage": "https://github.com/sauit-build-week-unit-4/sauti-unit4-backend#readme",
+  "homepage": "https://github.com/webpt-amazing-buildweek/back_end#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
