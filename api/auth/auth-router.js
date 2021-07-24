@@ -35,6 +35,8 @@ router.post("/register", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
 	try {
 		const { username, password } = req.body
+		console.log("in the try")
+		const userObject = req.body
 		if(!username || !password){
 			return res.status(400).json({
 				message: "username and password required"
@@ -44,24 +46,30 @@ router.post("/login", async (req, res, next) => {
 		const checkPassword = await bcrypt.compare(password,user.password)
 
 		if (!user){
+			console.log("in the if")
 			return res.status(401).json({
 				message: "username or password incorrect"
 			})
 		} else {
+			console.log("in the else")
 			const token = jwt.sign({
 				subject: user.id,
 				username: user.username
 			}, JWT_SECRET, {expiresIn: "1d"})
 			
+
 			res.cookie("token", token)
+			console.log("past the cookie")
 
 			res.status(200).json({
 				message: `Welcome back ${username}!`,
-				token: token
+				token: token,
+				user: userObject
 			})
 		}
 		
 	} catch (err) {
+		console.log("in the catch")
 		next(err)
 	}
 })

@@ -7,6 +7,7 @@ function find(){
 
 function findBy(filter){
 	console.log(filter)
+	console.log("in the findBy")
 	return db("users")
 		.select("*")
 		.where(filter)
